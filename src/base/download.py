@@ -1,5 +1,6 @@
 import os
 import tarfile
+import pandas as pd
 from urllib.request import urlretrieve
 
 DOWNLOAD_ROOT = "https://github.com/alexhegit/handson-ml2/raw/master/"
@@ -22,4 +23,16 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     housing_tgz.close()
 
 
-fetch_housing_data(HOUSING_URL, HOUSING_PATH)
+# fetch_housing_data(HOUSING_URL, HOUSING_PATH)
+
+def load_housing_data(housing_path=HOUSING_PATH):
+    csv_path = os.path.join(HOUSING_PATH, "housing.csv")
+    return pd.read_csv(csv_path)
+
+housing = load_housing_data()
+print(housing.head(5))
+print(housing.describe())
+print(housing.info())
+import matplotlib.pyplot as plt
+housing.hist(bins=50, figsize=(20,15))
+plt.show()
