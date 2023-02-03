@@ -10,3 +10,7 @@ tarfile.open(tgz_path)
 # pandas
 ## dataframe 
 info 查看概况每个字段类型 value_counts 查看单个分类字段各个类型上得总数 hist借用matlab包展示统计柱状图
+## numpy.permutation 随机生成或者打乱顺序
+np.random.permutation(10)
+arr = np.arange(9).reshape((3, 3))
+np.random.permutation(arr)
