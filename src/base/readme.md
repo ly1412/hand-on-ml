@@ -30,3 +30,8 @@ housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.4,
          c="median_house_value", cmap=plt.get_cmap("jet"), colorbar=True,
 ) alpha：透明度，s：点的半径，label：右上角标签，c：颜色 predefined color map (option cmap) called jet 冷色系到暖色系
 plt.legend()图例
+# 皮尔逊系数只能查看线性相关性
+corr_matrix = housing.corr(numeric_only=True)
+## 相关性图形化
+from pandas.plotting import scatter_matrix
+scatter_matrix(housing[attributes], figsize=(12, 8))
