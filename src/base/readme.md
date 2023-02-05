@@ -23,4 +23,10 @@ from sklearn.model_selection import StratifiedShuffleSplit
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42) for train_index, test_index in split.split(housing, housing["income_cat"]):
         strat_train_set = housing.loc[train_index]
         strat_test_set = housing.loc[test_index]
-## 
+# 数据图形化，利用颜色和点大小表示各种维度，进行整体分析
+## pandas plot
+housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.4,
+         s=housing["population"]/100, label="population",
+         c="median_house_value", cmap=plt.get_cmap("jet"), colorbar=True,
+) alpha：透明度，s：点的半径，label：右上角标签，c：颜色 predefined color map (option cmap) called jet 冷色系到暖色系
+plt.legend()图例
