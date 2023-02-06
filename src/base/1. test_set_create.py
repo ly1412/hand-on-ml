@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedShuffleSplit
 
 
-HOUSING_PATH = "housing"
+HOUSING_PATH = "datasets/housing"
 
 
 def load_housing_data(housing_path=HOUSING_PATH):

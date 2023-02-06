@@ -3,9 +3,10 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from pandas.plotting import scatter_matrix
 
 
-HOUSING_PATH = "housing"
+HOUSING_PATH = "datasets/housing"
 
 
 def load_housing_data(housing_path=HOUSING_PATH):
@@ -28,6 +29,13 @@ for set in (strat_train_set, strat_test_set):
 print("Train set shape:", strat_train_set.shape)
 print("Test set shape:", strat_test_set.shape)
 housing = strat_train_set.copy()
-housing.plot(kind='scatter', x='longitude', y='latitude', alpha=0.4, s=housing['population']/100, label='population', c='median_house_value', cmap=plt.get_cmap("jet"), colorbar=True)
-plt.legend()
+# corelations pearson's r
+corr_matrix = housing.corr(numeric_only=True)
+print(corr_matrix)
+print(corr_matrix["median_house_value"].sort_values(ascending=False))
+attributes = ["median_house_value", "median_income", "total_rooms",
+                  "housing_median_age"]
+# scatter_matrix(housing[attributes], figsize=(12, 8))
+housing.plot(kind="scatter", x="median_income", y="median_house_value",
+                 alpha=0.1)
 plt.show()

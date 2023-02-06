@@ -1,12 +1,10 @@
-from sklearn.model_selection import StratifiedShuffleSplit
 import os
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from pandas.plotting import scatter_matrix
+from sklearn.model_selection import StratifiedShuffleSplit
 
 
-HOUSING_PATH = "housing"
+HOUSING_PATH = "datasets/housing"
 
 
 def load_housing_data(housing_path=HOUSING_PATH):
@@ -28,14 +26,19 @@ for set in (strat_train_set, strat_test_set):
     set.drop(["income_cat"], axis=1, inplace=True)
 print("Train set shape:", strat_train_set.shape)
 print("Test set shape:", strat_test_set.shape)
-housing = strat_train_set.copy()
-# corelations pearson's r
-corr_matrix = housing.corr(numeric_only=True)
-print(corr_matrix)
-print(corr_matrix["median_house_value"].sort_values(ascending=False))
-attributes = ["median_house_value", "median_income", "total_rooms",
-                  "housing_median_age"]
-# scatter_matrix(housing[attributes], figsize=(12, 8))
-housing.plot(kind="scatter", x="median_income", y="median_house_value",
-                 alpha=0.1)
-plt.show()
+housing = strat_train_set.drop('median_house_value', axis=1)
+housing_labels = strat_train_set['median_house_value'].copy()
+# from sklearn.preprocessing import LabelEncoder
+# encoder = LabelEncoder()
+housing_cat = housing['ocean_proximity']
+# housing_cat_encoded = encoder.fit_transform(housing_cat)
+# print(housing_cat_encoded)
+# from sklearn.preprocessing import OneHotEncoder
+# encoder = OneHotEncoder()
+# housing_cat_onehot = encoder.fit_transform(housing_cat_encoded.reshape(-1, 1))
+# print(type(housing_cat_onehot))
+# print(housing_cat_onehot.toarray())
+from sklearn.preprocessing import LabelBinarizer
+encoder = LabelBinarizer(sparse_output=True)
+housing_cat_onehot = encoder.fit_transform(housing_cat)
+print(housing_cat_onehot)
