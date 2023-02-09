@@ -19,6 +19,8 @@ arr = np.arange(9).reshape((3, 3))
 np.random.permutation(arr)
 ## numpy.reshape(-1, 1)
 第一个参数表示增加维度，第二个为每个维度元素，也就是len()对第二个参数必须整除
+## 多维数组多个情况合并
+np.c_[X, rooms_per_household, population_per_household, bedrooms_per_room]
 ## sklearn train_test_split
 train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42)  random_state: 随机种子
 # 如何划分train testset
@@ -94,5 +96,22 @@ from sklearn.preprocessing import LabelBinarizer
 ### 指定输出sparse matrix 默认是多维数组
 encoder = LabelBinarizer(sparse_output=True)
 housing_cat_onehot = encoder.fit_transform(housing_cat)
+# customer transformer 
+## 实现TransformerMixin
+可复用fit_transform方法
+## BaseEstimator
+避免*args and **kargs in your constructor同时，get_params() and set_params()，自动调试超参
+# feature scaling
+## min-max
+(xn-min)/(max-min) scaling to [0,1]
+## MinMaxScaler
+feature_range能控制是到[0,1]还是[0,n]
+## Standardization
+(xn-mean)/var  方差为1，均值为0
+## 区别标准化对个别极值无影响，min-max对极值影响很大
+## StandardScaler
+# Pipline
+## last estimator must be transformers must have fit_transform method
+## 如果是调用Pipline.fit从第一个开始fit_transform最后一个只调用fit
 
 
