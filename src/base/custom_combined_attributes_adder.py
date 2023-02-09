@@ -3,6 +3,7 @@ import numpy as np
 import os
 from sklearn.model_selection import StratifiedShuffleSplit
 import pandas as pd
+import sys
 
 rooms_ix, bedrooms_ix, population_ix, household_ix = 3, 4, 5, 6
 
@@ -22,11 +23,11 @@ class CustomCombinedAttributesAdder(BaseEstimator, TransformerMixin):
             return np.c_[X, rooms_per_household, population_per_household]
 
 
-HOUSING_PATH = "datasets/housing"
+HOUSING_PATH = "datasets" + os.sep + "housing" + os.sep
 
 
 def load_housing_data(housing_path=HOUSING_PATH):
-    csv_path = os.path.join(HOUSING_PATH, "housing.csv")
+    csv_path = os.path.join(sys.path[0], HOUSING_PATH + "housing.csv")
     return pd.read_csv(csv_path)
 
 

@@ -9,9 +9,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import FeatureUnion
 from data_frame_selector import DataFrameSelector
 from custom_label_binarizer import CustomLabelBinarizer
-from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import sys
+from sklearn.tree import DecisionTreeRegressor
 
 
 HOUSING_PATH = "datasets" + os.sep + "housing" + os.sep
@@ -63,14 +63,9 @@ full_pipe = FeatureUnion(transformer_list=[
 ])
 
 housing_prepared = full_pipe.fit_transform(housing)
-lin_reg = LinearRegression()
-lin_reg.fit(housing_prepared, housing_labels)
-some_data = housing.iloc[:5]
-some_labels = housing_labels.iloc[:5]
-some_data_prepared = full_pipe.transform(some_data)
-print("Predictions:\t", lin_reg.predict(some_data_prepared))
-print("Real value:\t", list(some_labels))
-housing_predictions = lin_reg.predict(housing_prepared)
+tree_reg = DecisionTreeRegressor()
+tree_reg.fit(housing_prepared, housing_labels)
+housing_predictions = tree_reg.predict(housing_prepared)
 lin_mse = mean_squared_error(housing_labels, housing_predictions)
 lin_rmse = np.sqrt(lin_mse)
 print(lin_rmse)
