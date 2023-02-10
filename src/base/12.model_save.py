@@ -82,7 +82,8 @@ tree_reg.fit(housing_prepared, housing_labels)
 scores = cross_val_score(tree_reg, housing_prepared, housing_labels, scoring="neg_mean_squared_error", cv=10)
 rmse_scores = np.sqrt(-scores)
 display_scores(rmse_scores)
-
-with open(os.path.join(sys.path[0], HOUSING_PATH + "tree_reg"), 'wb') as pickle_file:
+save_file = os.path.join(sys.path[0], HOUSING_PATH + "tree_reg")
+print("OutputFile:", save_file)
+with open(save_file, 'wb') as pickle_file:
     pickle.dump(tree_reg, pickle_file)
 
