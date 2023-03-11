@@ -22,15 +22,16 @@ def plot_learning_curves(model, X, y):
     plt.plot(np.sqrt(val_errors), "b-", linewidth=3, label="val")
 
 
-m_ext = 1000
+m_ext = 2000
 X = 6 * np.random.rand(m_ext, 1) - 3
 y = 0.5 * X**2 + X + 2 + np.random.randn(m_ext, 1)
 print(X.shape)
 print(y.shape)
 polynomial_reg = Pipeline([
-    ("poly_feature", PolynomialFeatures(degree=1, include_bias=False)),
+    ("poly_feature", PolynomialFeatures(degree=10, include_bias=False)),
     ("sgd_reg", LinearRegression())
 ])
 plot_learning_curves(polynomial_reg, X, y)
+plt.ylim([0.65, 1.3])
 plt.legend()
 plt.show()
