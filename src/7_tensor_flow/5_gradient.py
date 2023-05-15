@@ -66,8 +66,11 @@ y_pred = tf.compat.v1.matmul(X, theta, name="predictions")
 error = y_pred - y
 print("error shape:", error.shape)
 mse = tf.compat.v1.reduce_mean(tf.compat.v1.square(error), name="mse")
-gradients = 2/m * tf.compat.v1.matmul(tf.compat.v1.transpose(X), error)
-training_op = tf.compat.v1.assign(theta, theta - learning_rate * gradients)
+# 1. 手动计算方式: gradients = 2/m * tf.compat.v1.matmul(tf.compat.v1.transpose(X), error)
+# 2. tf gridient gradients = tf.compat.v1.gradients(mse, [theta])[0]   training_op = tf.compat.v1.assign(theta, theta - learning_rate * gradients)
+# 3. optimizer 方式
+optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate=learning_rate)
+training_op = optimizer.minimize(mse)
 init = tf.compat.v1.global_variables_initializer()
 with tf.compat.v1.Session() as sess:
     sess.run(init)
