@@ -76,9 +76,9 @@ batch_size = 500
 n_batches = int(np.ceil(m / batch_size))
 theta = tf.compat.v1.Variable(tf.compat.v1.random_uniform([n, 1], -1.0, 1.0), name="theta")
 y_pred = tf.compat.v1.matmul(X, theta, name="predictions")
-error = y_pred - y
-print("error shape:", error.shape)
-mse = tf.compat.v1.reduce_mean(tf.compat.v1.square(error), name="mse")
+with tf.name_scope("loss") as scope:
+    error = y_pred - y
+    mse = tf.reduce_mean(tf.square(error), name="mse")
 optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate=learning_rate)
 training_op = optimizer.minimize(mse)
 saver = tf.compat.v1.train.Saver()
